@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kettlebell Workout System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="rail" aria-label="App summary">
+        <div class="brand-mark" aria-hidden="true">K</div>
+        <div>
+          <p class="eyebrow">Kettlebell</p>
+          <h1>Bell Ascent</h1>
+        </div>
+        <div class="rail-stat">
+          <span>Current</span>
+          <strong id="railCurrent">20kg</strong>
+        </div>
+        <div class="rail-stat">
+          <span>Week</span>
+          <strong id="railWeek">0/3</strong>
+        </div>
+      </aside>
+
+      <main class="phone-frame" aria-label="Kettlebell Workout System">
+        <header class="app-header">
+          <button class="icon-button settings-button" type="button" data-view="setup" aria-label="Open settings" title="Settings">
+            <span aria-hidden="true">⚙</span>
+          </button>
+          <div>
+            <p class="eyebrow">Strength journey</p>
+            <h2 id="screenTitle">Home</h2>
+          </div>
+          <button class="icon-button" type="button" id="exportButton" aria-label="Save data" title="Save data">
+            <span aria-hidden="true">↓</span>
+          </button>
+        </header>
+
+        <section class="view is-active" id="homeView" aria-labelledby="homeTitle">
+          <div class="summit-card">
+            <div class="summit-copy">
+              <p class="eyebrow" id="categoryLabel">Builder category</p>
+              <h3 id="currentLevelTitle">20 kg</h3>
+              <p id="currentLevelSubtitle">Active Builder level</p>
+            </div>
+            <div class="mountain-stage" aria-label="Current ascent map">
+              <div class="summit-line"></div>
+              <div class="mountain-layer mountain-layer-back"></div>
+              <div class="mountain-layer mountain-layer-mid"></div>
+              <div class="mountain-layer mountain-layer-front"></div>
+              <div class="climber-dot" id="climberDot"></div>
+            </div>
+          </div>
+
+          <section class="metric-grid" aria-label="Weekly metrics">
+            <article class="metric-card accent-orange">
+              <span>This week</span>
+              <strong id="weekProgress">0/3</strong>
+              <small id="weekProgressText">sessions logged</small>
+            </article>
+            <article class="metric-card accent-blue">
+              <span>Ownership</span>
+              <strong id="readinessSignal">Building</strong>
+              <small id="readinessText">level signal</small>
+            </article>
+          </section>
+
+          <section class="panel ownership-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Level ownership</p>
+                <h3 id="ownershipTitle">20kg command</h3>
+              </div>
+              <span class="pill" id="ownershipPill">0%</span>
+            </div>
+            <div class="ownership-meter" aria-hidden="true">
+              <span id="ownershipMeterFill"></span>
+            </div>
+            <div class="ownership-list" id="ownershipList"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Nearby levels</p>
+                <h3>Your current ridge</h3>
+              </div>
+              <span class="pill" id="nearbyPill">20kg zone</span>
+            </div>
+            <div class="level-strip" id="nearbyLevels"></div>
+          </section>
+
+          <section class="quick-log" aria-label="Quick workout logging">
+            <button class="log-action primary" type="button" data-workout="max_level_full_body">
+              <span>Max</span>
+              <strong>Full body</strong>
+            </button>
+            <button class="log-action" type="button" data-workout="medium_kettlebell">
+              <span>Medium</span>
+              <strong>Kettlebell</strong>
+            </button>
+            <button class="log-action" type="button" data-workout="other">
+              <span>Other</span>
+              <strong>Activity</strong>
+            </button>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Latest</p>
+                <h3>Recent work</h3>
+              </div>
+              <button class="text-button" type="button" data-view="history">View all</button>
+            </div>
+            <div class="activity-list" id="recentWorkouts"></div>
+          </section>
+        </section>
+
+        <section class="view" id="levelsView" aria-labelledby="levelsTitle">
+          <div class="page-title">
+            <p class="eyebrow">Ascent map</p>
+            <h2 id="levelsTitle">Conquered terrain</h2>
+          </div>
+
+          <section class="terrain-panel">
+            <div class="terrain-map" id="terrainMap" aria-label="Level terrain map"></div>
+          </section>
+
+          <section class="panel class-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Weight class</p>
+                <h3 id="classTitle">Builder</h3>
+              </div>
+              <span class="pill" id="classRange">16-24kg</span>
+            </div>
+            <p class="quiet-text" id="classDescription"></p>
+            <div class="class-meter" id="classMeter" aria-label="Weight class progress"></div>
+            <p class="quiet-text micro-copy">Level work is context, not a score. You mark a weight conquered when it truly feels owned.</p>
+            <div class="level-list" id="levelList"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Level history</p>
+                <h3>Timeline</h3>
+              </div>
+            </div>
+            <div class="timeline-list" id="levelTimeline"></div>
+          </section>
+        </section>
+
+        <section class="view" id="systemView" aria-labelledby="systemTitle">
+          <div id="systemMapView">
+            <section class="system-hero">
+              <div class="system-hero-copy">
+                <p class="eyebrow">System manual</p>
+                <h2 id="systemTitle">The Kettlebell System</h2>
+                <p>One bell, three movements, earned progression.</p>
+              </div>
+              <div class="system-orbit" aria-hidden="true">
+                <div class="bell-icon"></div>
+                <span class="orbit-node orbit-engine">Swing</span>
+                <span class="orbit-node orbit-bridge">Press</span>
+                <span class="orbit-node orbit-base">Deadlift</span>
+              </div>
+            </section>
+
+            <section class="metric-grid system-progress-grid" aria-label="System progress">
+              <article class="metric-card accent-orange">
+                <span>Progress</span>
+                <strong id="systemProgressValue">0/20</strong>
+                <small id="systemProgressText">lessons complete</small>
+              </article>
+              <article class="metric-card accent-blue">
+                <span>Current gate</span>
+                <strong id="systemGateValue">Doctrine</strong>
+                <small id="systemGateText">next lesson</small>
+              </article>
+            </section>
+
+            <section class="panel system-doctrine-panel">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow">Route</p>
+                  <h3>Three-move base</h3>
+                </div>
+                <span class="pill">one bell</span>
+              </div>
+              <div class="triad-mini">
+                <article>
+                  <span>Engine</span>
+                  <strong>Swing</strong>
+                </article>
+                <article>
+                  <span>Bridge</span>
+                  <strong>Squat-To-Press</strong>
+                </article>
+                <article>
+                  <span>Base</span>
+                  <strong>Suitcase Deadlift</strong>
+                </article>
+              </div>
+            </section>
+
+            <div class="system-module-list" id="systemModuleList"></div>
+          </div>
+
+          <article class="lesson-detail" id="lessonDetailView" hidden></article>
+        </section>
+
+        <section class="view" id="logView" aria-labelledby="logTitle">
+          <div class="page-title">
+            <p class="eyebrow">Training log</p>
+            <h2 id="logTitle">Add workout</h2>
+          </div>
+
+          <form class="panel form-panel" id="workoutForm">
+            <input id="editingWorkoutId" type="hidden" />
+            <label>
+              Workout type
+              <select id="workoutType" name="workoutType">
+                <option value="max_level_full_body">Max Level Full Body</option>
+                <option value="medium_kettlebell">Medium Kettlebell</option>
+                <option value="other">Other Workout</option>
+              </select>
+            </label>
+            <label>
+              Date
+              <input id="workoutDate" name="workoutDate" type="date" />
+            </label>
+            <label>
+              Duration
+              <input id="workoutDuration" name="workoutDuration" type="number" min="1" max="300" value="45" />
+            </label>
+            <label>
+              Notes
+              <textarea id="workoutNotes" name="workoutNotes" rows="4" placeholder="Clean session, swings, presses, carries..."></textarea>
+            </label>
+            <div class="form-actions">
+              <button class="submit-button" id="workoutSubmitButton" type="submit">Log workout</button>
+              <button class="ghost-button" id="cancelEditButton" type="button" hidden>Cancel edit</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="view" id="historyView" aria-labelledby="historyTitle">
+          <div class="page-title">
+            <p class="eyebrow">Monthly view</p>
+            <h2 id="historyTitle">Training history</h2>
+          </div>
+
+          <section class="month-card">
+            <div>
+              <span id="monthName">This month</span>
+              <strong id="monthTotal">0</strong>
+              <small>total workouts</small>
+            </div>
+            <div class="month-bars" id="monthBars" aria-label="Monthly workout chart"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Timeline</p>
+                <h3>All workouts</h3>
+              </div>
+            </div>
+            <div class="activity-list" id="allWorkouts"></div>
+          </section>
+        </section>
+
+        <section class="view" id="statsView" aria-labelledby="statsTitle">
+          <div class="page-title">
+            <p class="eyebrow">Body stats</p>
+            <h2 id="statsTitle">Strength signal</h2>
+          </div>
+
+          <section class="metric-grid">
+            <article class="metric-card accent-green">
+              <span>Bodyweight</span>
+              <strong id="bodyweightValue">92kg</strong>
+              <small id="bodyweightDelta">baseline</small>
+            </article>
+            <article class="metric-card accent-orange">
+              <span>Ownership</span>
+              <strong id="statsOwnershipValue">0%</strong>
+              <small id="statsOwnershipLabel">current level</small>
+            </article>
+          </section>
+
+          <form class="panel form-panel compact" id="bodyStatForm">
+            <label>
+              Bodyweight
+              <input id="bodyweightInput" type="number" min="30" max="250" step="0.1" value="92" />
+            </label>
+            <label>
+              Note
+              <input id="bodyweightNote" type="text" placeholder="Morning check-in" />
+            </label>
+            <button class="submit-button" type="submit">Add stat</button>
+          </form>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Trend</p>
+                <h3>Bodyweight entries</h3>
+              </div>
+            </div>
+            <div class="activity-list" id="bodyStatsList"></div>
+          </section>
+        </section>
+
+        <section class="view" id="setupView" aria-labelledby="setupTitle">
+          <div class="page-title">
+            <p class="eyebrow">Setup</p>
+            <h2 id="setupTitle">Set your ascent</h2>
+          </div>
+
+          <section class="setup-hero panel">
+            <div>
+              <p class="eyebrow">Current profile</p>
+              <h3 id="setupHeroTitle">20kg active</h3>
+              <p>Keep the app honest: current bell, unlocked ceiling, weekly rhythm.</p>
+            </div>
+            <div class="setup-summary-grid" aria-label="Current setup summary">
+              <article>
+                <span>Current</span>
+                <strong id="setupCurrentPreview">20kg</strong>
+              </article>
+              <article>
+                <span>Unlocked</span>
+                <strong id="setupUnlockedPreview">24kg</strong>
+              </article>
+              <article>
+                <span>Weekly</span>
+                <strong id="setupWeekPreview">3x</strong>
+              </article>
+            </div>
+          </section>
+
+          <form class="panel form-panel setup-form" id="setupForm">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Training profile</p>
+                <h3>Your baseline</h3>
+              </div>
+            </div>
+            <div class="setup-form-grid">
+              <label>
+                Name
+                <input id="profileName" type="text" value="Dimitri" />
+              </label>
+              <label>
+                Current level
+                <select id="currentLevelSelect"></select>
+              </label>
+              <label>
+                Highest unlocked
+                <select id="highestUnlockedSelect"></select>
+              </label>
+              <label>
+                Weekly target
+                <select id="weeklyTargetSelect">
+                  <option value="2">2 sessions</option>
+                  <option value="3" selected>3 sessions</option>
+                </select>
+              </label>
+              <label>
+                Months at level
+                <input id="levelAgeMonths" type="number" min="0" max="120" step="0.5" value="0" placeholder="0" />
+              </label>
+            </div>
+            <button class="submit-button" type="submit">Save setup</button>
+          </form>
+
+          <section class="panel data-panel setup-maintenance" aria-label="Data backup">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Maintenance</p>
+                <h3>Data and stats</h3>
+              </div>
+            </div>
+            <p class="quiet-text">Backup your app data, restore a previous file, or open body stats from here.</p>
+            <div class="data-actions">
+              <button class="ghost-button" type="button" id="saveDataButton">Save data</button>
+              <button class="ghost-button" type="button" id="uploadDataButton">Upload data</button>
+            </div>
+            <input id="uploadDataInput" type="file" accept="application/json,.json" hidden />
+            <button class="ghost-button wide" type="button" data-view="stats">Open body stats</button>
+          </section>
+
+          <section class="danger-zone">
+            <div>
+              <p class="eyebrow">Danger zone</p>
+              <span>Demo and reset actions change the whole app state.</span>
+            </div>
+            <button class="ghost-button wide" type="button" id="demoButton">Preview with demo data</button>
+            <button class="danger-button" type="button" id="resetButton">Reset app data</button>
+          </section>
+        </section>
+
+        <nav class="tab-bar" aria-label="Primary navigation">
+          <button class="tab is-active" type="button" data-view="home">Home</button>
+          <button class="tab" type="button" data-view="levels">Levels</button>
+          <button class="tab" type="button" data-view="system">System</button>
+          <button class="tab" type="button" data-view="log">Log</button>
+          <button class="tab" type="button" data-view="history">History</button>
+        </nav>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="welcomeModal" hidden>
+      <section class="modal-card welcome-card" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+        <p class="eyebrow">Bell Ascent</p>
+        <h2 id="welcomeTitle">Start your climb</h2>
+        <p class="quiet-text">Create your profile from zero, or preview the app with demo workouts before committing.</p>
+        <div class="modal-actions">
+          <button class="submit-button" type="button" data-view="setup" id="startSetupButton">Start setup</button>
+          <button class="ghost-button" type="button" id="welcomeDemoButton">Use demo data</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="conquestModal" hidden>
+      <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="conquestTitle">
+        <p class="eyebrow">Manual conquest</p>
+        <h2 id="conquestTitle">Mark level conquered?</h2>
+        <p class="quiet-text" id="conquestCopy"></p>
+        <div class="conquest-stats" id="conquestStats"></div>
+        <div class="modal-actions">
+          <button class="submit-button" type="button" id="confirmConquestButton">Mark conquered</button>
+          <button class="ghost-button" type="button" id="cancelConquestButton">Cancel</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app-data.js"></script>
+    <script src="app-core.js"></script>
+    <script src="app-render.js"></script>
+    <script src="app-events.js"></script>
+  </body>
+</html>
